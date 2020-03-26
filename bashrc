@@ -2,6 +2,13 @@
 #
 # A simple bashrc
 #
+# Recommended use is to append this block to your ~/.bashrc file so you can
+# keep this directory under version control:
+#
+# if [ -f $HOME/dotfiles/bashrc ]; then
+#     . $HOME/dotfiles/bashrc
+# fi
+#
 # Deliberately simple in order to enable easier hacking
 #
 # Some of the functions, eg _exit, are intended as an example of a feature of bash
@@ -37,37 +44,38 @@ HOSTFILE=$HOME/.hosts
 HISTCONTROL=ignoreboth
 HISTSIZE=10000
 HISTFILESIZE=20000
+HISTCONTROL=ignoreboth
 
-Black='\e[0;30m'    
-Red='\e[0;31m'      
-Green='\e[0;32m'    
-Yellow='\e[0;33m'   
-Blue='\e[0;34m'     
-Purple='\e[0;35m'   
-Cyan='\e[0;36m'     
-Magenta='\e[0;35m'  
-White='\e[0;37m'    
+Black='\e[0;30m'
+Red='\e[0;31m'
+Green='\e[0;32m'
+Yellow='\e[0;33m'
+Blue='\e[0;34m'
+Purple='\e[0;35m'
+Cyan='\e[0;36m'
+Magenta='\e[0;35m'
+White='\e[0;37m'
 
 # Bold
-BBlack='\e[1;30m'   
-BRed='\e[1;31m'     
-BGreen='\e[1;32m'   
-BYellow='\e[1;33m'  
-BBlue='\e[1;34m'    
-BPurple='\e[1;35m'  
-BCyan='\e[1;36m'    
-BMagenta='\e[1;35m' 
-BWhite='\e[1;37m'   
+BBlack='\e[1;30m'
+BRed='\e[1;31m'
+BGreen='\e[1;32m'
+BYellow='\e[1;33m'
+BBlue='\e[1;34m'
+BPurple='\e[1;35m'
+BCyan='\e[1;36m'
+BMagenta='\e[1;35m'
+BWhite='\e[1;37m'
 
 # Background
-On_Black='\e[40m' 
-On_Red='\e[41m'   
-On_Green='\e[42m' 
+On_Black='\e[40m'
+On_Red='\e[41m'
+On_Green='\e[42m'
 On_Yellow='\e[43m'
-On_Blue='\e[44m'  
+On_Blue='\e[44m'
 On_Purple='\e[45m'
-On_Cyan='\e[46m'  
-On_White='\e[47m' 
+On_Cyan='\e[46m'
+On_White='\e[47m'
 
 NC='\e[0m'
 
@@ -130,7 +138,6 @@ function ii
     echo
 }
 
-
 ## Begin Aliases
 
 alias dotfiles="cd $HOME/dotfiles"
@@ -143,21 +150,23 @@ if exists subl; then
 fi
 
 alias dev="cd $HOMEDRIVE/dev"
+alias sk="cd $HOMEDRIVE/dev/skunkworks"
 alias h='history'
 alias j='jobs -l'
 
 alias ls="ls -h"
-alias ll="ls -lhv"
+alias ll="ls -lhv --color=auto"
 
 alias grep="grep --color=auto"
 
 alias gc="git checkout"
 alias gs="git status"
 alias gpull="git pull --rebase --prune"
-alias gp="git push"
+alias gpp="gpull && gp"
 alias gd="git diff"
-alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gdd="git diff --color-words"
+alias gl="git log -n 10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gca="git commit --all"
 alias gb="git branch -a"
 
-
+alias sshh="ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null"
