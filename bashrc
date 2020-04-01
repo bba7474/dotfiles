@@ -138,6 +138,33 @@ function ii
     echo
 }
 
+function gp
+{
+    unset PUSH_AND_SET_UPSTREAM_CMD
+    unset PUSH_OUTPUT
+    unset PULL_REQUEST_URL
+
+    PUSH_OUTPUT="$(git push "$@" 2>&1 | tee /dev/tty)"
+
+    if [[ "$PUSH_OUTPUT" == *"no upstream branch"* ]]; then
+        PUSH_AND_SET_UPSTREAM_CMD=$(git push "$@" 2>&1 | tail -n2)
+        echo "Upstream not set... setting with '$(echo $PUSH_AND_SET_UPSTREAM_CMD)'"
+        PUSH_OUTPUT="$($PUSH_AND_SET_UPSTREAM_CMD 2>&1 >/dev/null)"
+    fi
+
+    which chrome >/dev/null 2>&1
+
+    if [ "$?" -eq 0 ]; then
+        PULL_REQUEST_URL=$(echo "$PUSH_OUTPUT" | grep -o "remote: .*" | sed -ur 's/remote:(.*)/\1/' | tail -2)
+
+        if [ "$PULL_REQUEST_URL" != "" ]; then
+            echo "Loading Pull Request in your favourite browser... (CTRL+C to cancel)"
+            sleep 1
+            chrome $PULL_REQUEST_URL
+        fi
+    fi
+}
+
 ## Begin Aliases
 
 alias dotfiles="cd $HOME/dotfiles"
