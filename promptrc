@@ -47,8 +47,8 @@ function prompt_history {
 	echo "$__prompt_color_White[\!]"
 }
 
-function red_or_green_by_exit_code() {
-	if [ $1 == 0 ]; then echo $__prompt_color_Green; else echo $__prompt_color_Red; fi
+function smiley_by_exit_code() {
+	if [ $1 == 0 ]; then echo "$__prompt_color_Green"^_^; else echo "$__prompt_color_Red"O_O; fi
 }
 
 function pwd_tail {
@@ -94,7 +94,7 @@ function __prompt_command {
     history -a
     PS1="$__prompt_color_NC"
     PS1+="$(prompt_history)"
-    PS1+="$__prompt_color_BBlack($(red_or_green_by_exit_code "$exit_code")\u@\h$__prompt_color_BBlack)-"
+    PS1+="$__prompt_color_BBlack($(smiley_by_exit_code "$exit_code")$__prompt_color_BBlack)-"
 #    PS1+="($__prompt_color_BBlue\j$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_BBlue$(pwd_tail)$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_Green$(dir_files)$__prompt_color_BBlack)"

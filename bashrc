@@ -5,8 +5,8 @@
 # Recommended use is to append this block to your ~/.bashrc file so you can
 # keep this directory under version control:
 #
-# if [ -f $HOME/dotfiles/bashrc ]; then
-#     . $HOME/dotfiles/bashrc
+# if [ -f $HOME/git/dotfiles/bashrc ]; then
+#     . $HOME/git/dotfiles/bashrc
 # fi
 #
 # Deliberately simple in order to enable easier hacking
@@ -18,13 +18,13 @@
 
 
 # Use the dotfiles prompt if it exists
-if [ -f $HOME/dotfiles/promptrc ]; then
-    . $HOME/dotfiles/promptrc
+if [ -f $HOME/git/dotfiles/promptrc ]; then
+    . $HOME/git/dotfiles/promptrc
 fi
 
 # Use the dotfiles vimrc if one doesn't exist already
 if [ ! -f $HOME/.vimrc ]; then
-    ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
+    ln -s $HOME/git/dotfiles/vimrc $HOME/.vimrc
 fi
 
 
@@ -55,6 +55,7 @@ Purple='\e[0;35m'
 Cyan='\e[0;36m'
 Magenta='\e[0;35m'
 White='\e[0;37m'
+NoColor='\e[0m'
 
 # Bold
 BBlack='\e[1;30m'
@@ -167,17 +168,15 @@ function gp
 
 ## Begin Aliases
 
-alias dotfiles="cd $HOME/dotfiles"
-alias b="$EDITOR $HOME/dotfiles/bashrc && source $HOME/.bashrc"
-alias bprompt="$EDITOR $HOME/dotfiles/promptrc && . $HOME/.bashrc"
+alias dotfiles="cd $HOME/git/dotfiles"
+alias b="$EDITOR $HOME/git/dotfiles/bashrc && source $HOME/.bashrc"
+alias bprompt="$EDITOR $HOME/git/dotfiles/promptrc && . $HOME/.bashrc"
 alias v="$EDITOR $HOME/.vimrc"
 
 if exists subl; then
     alias s="subl"
 fi
 
-alias dev="cd $HOMEDRIVE/dev"
-alias sk="cd $HOMEDRIVE/dev/skunkworks"
 alias h='history'
 alias j='jobs -l'
 
@@ -192,8 +191,17 @@ alias gpull="git pull --rebase --prune"
 alias gpp="gpull && gp"
 alias gd="git diff"
 alias gdd="git diff --color-words"
-alias gl="git log -n 10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gl="git log -n 10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --no-merges"
 alias gca="git commit --all"
 alias gb="git branch -a"
+alias grm="git fetch && git rebase origin/master"
+alias gaac="git add --all && git commit -m"
+alias master="git fetch && git checkout master && git rebase origin/master"
 
 alias sshh="ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null"
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
