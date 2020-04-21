@@ -17,4 +17,4 @@ if [ -f $HOME/git/dotfiles/zshrc ]; then
 fi
 ```
 
-
+TODO: figure out how to stop the oh-my-zsh git plugin overwriting our gp function alias

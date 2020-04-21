@@ -136,41 +136,43 @@ function exists
 #     echo
 # }
 
-# function gp
-# {
-#     unset PUSH_AND_SET_UPSTREAM_CMD
-#     unset PUSH_OUTPUT
-#     unset PULL_REQUEST_URL
+function gp_auto
+{
+    unset PUSH_AND_SET_UPSTREAM_CMD
+    unset PUSH_OUTPUT
+    unset PULL_REQUEST_URL
 
-#     PUSH_OUTPUT="$(git push "$@" 2>&1 | tee /dev/tty)"
+    PUSH_OUTPUT="$(git push "$@" 2>&1 | tee /dev/tty)"
 
-#     if [[ "$PUSH_OUTPUT" == *"no upstream branch"* ]]; then
-#         PUSH_AND_SET_UPSTREAM_CMD=$(git push "$@" 2>&1 | tail -n2)
-#         echo "Upstream not set... setting with '$(echo $PUSH_AND_SET_UPSTREAM_CMD)'"
-#         PUSH_OUTPUT="$($PUSH_AND_SET_UPSTREAM_CMD 2>&1 >/dev/null)"
-#     fi
+    if [[ "$PUSH_OUTPUT" == *"no upstream branch"* ]]; then
+        PUSH_AND_SET_UPSTREAM_CMD=$(git push "$@" 2>&1 | tail -n2 | xargs)
+        echo "Upstream not set... setting with '$(echo $PUSH_AND_SET_UPSTREAM_CMD)'"
+        PUSH_OUTPUT="$(eval ${PUSH_AND_SET_UPSTREAM_CMD} 2>&1 >/dev/null)"
+    fi
 
-#     which chrome >/dev/null 2>&1
+    exists chrome
 
-#     if [ "$?" -eq 0 ]; then
-#         PULL_REQUEST_URL=$(echo "$PUSH_OUTPUT" | grep -o "remote: .*" | sed -ur 's/remote:(.*)/\1/' | tail -2)
+    if [ "$?" -eq 0 ]; then
+        PULL_REQUEST_URL=$(echo "$PUSH_OUTPUT" | grep -o "remote: .*" | sed -E 's/remote:(.*)/\1/' | tail -2 | xargs)
 
-#         if [ "$PULL_REQUEST_URL" != "" ]; then
-#             echo "Loading Pull Request in your favourite browser... (CTRL+C to cancel)"
-#             sleep 1
-#             chrome $PULL_REQUEST_URL
-#         fi
-#     fi
-# }
+        if [ "$PULL_REQUEST_URL" != "" ]; then
+            echo "Loading Pull Request in your favourite browser... (CTRL+C to cancel)"
+            sleep 1
+            chrome $PULL_REQUEST_URL
+        fi
+    fi
+}
 
-# ## Begin Aliases
+## Begin Aliases
 
 alias dotfiles="cd $HOME/git/dotfiles"
 alias z="$EDITOR $HOME/git/dotfiles/bashrc && source $HOME/.bashrc"
 # alias bprompt="$EDITOR $HOME/dotfiles/promptrc && . $HOME/.bashrc"
 alias v="$EDITOR $HOME/.vimrc"
 
+### Program aliases
 alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+alias chrome="open -a 'Google Chrome'"
 
 alias h='history'
 alias j='jobs -l'
@@ -178,17 +180,15 @@ alias j='jobs -l'
 alias ls="ls -h"
 alias ll="ls -lhv"
 
-alias gc="git checkout"
-alias gs="git status"
-alias gpull="git pull --rebase --prune"
-alias gpp="gpull && gp"
-alias gd="git diff"
+### Git aliases
+alias gaac="git add --all && git commit -m"
+alias gb="git branch -a"
 alias gdd="git diff --color-words"
 alias gl="git log -n 10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias gca="git commit --all"
-alias gb="git branch -a"
+alias gpp="gpull && gp"
+alias gpull="git pull --rebase --prune"
 alias grm="git fetch && git rebase origin/master"
-alias gaac="git add --all && git commit -m"
+alias gs="git status"
 alias master="git fetch && git checkout master && git rebase origin/master"
 
 alias sshh="ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null"
