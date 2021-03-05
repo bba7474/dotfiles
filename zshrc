@@ -15,32 +15,7 @@
 #
 # Contributions welcome
 
-# Commented out sections are bits that are taken from my bashrc file that I have not yet ported and tested in zsh
-
-# TODO THIS DOESN'T REALLY WORK IN ZSH
-# Use the dotfiles prompt if it exists
-# if [ -f $HOME/dotfiles/promptrc ]; then
-#    . $HOME/dotfiles/promptrc
-# fi
-
-# TODO THIS DOESN'T REALLY WORK IN ZSH
-# Use the dotfiles vimrc if one doesn't exist already
-# if [ ! -f $HOME/.vimrc ]; then
-#    ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
-# fi
-
 set -o noclobber
-# setopt -s cdspell
-# setopt -s cdable_vars
-# setopt -s checkhash
-# setopt -s checkwinsize
-# setopt -s histappend
-
-# HOSTFILE=$HOME/.hosts
-# HISTCONTROL=ignoreboth
-# HISTSIZE=10000
-# HISTFILESIZE=20000
-# HISTCONTROL=ignoreboth
 
 Black='\e[0;30m'
 Red='\e[0;31m'
@@ -136,7 +111,7 @@ function exists
 #     echo
 # }
 
-function gp_auto
+function gp
 {
     unset PUSH_AND_SET_UPSTREAM_CMD
     unset PUSH_OUTPUT
