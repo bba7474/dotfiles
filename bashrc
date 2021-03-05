@@ -194,9 +194,10 @@ alias gdd="git diff --color-words"
 alias gl="git log -n 10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --no-merges"
 alias gca="git commit --all"
 alias gb="git branch -a"
-alias grm="git fetch && git rebase origin/master"
+alias grm="git fetch --prune && git rebase origin/master"
 alias gaac="git add --all && git commit -m"
-alias master="git fetch && git checkout master && git rebase origin/master"
+alias master="git fetch --prune && git checkout master && git rebase origin/master"
+alias main="git fetch --prune && git checkout main && git rebase origin/main"
 
 alias sshh="ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null"
 

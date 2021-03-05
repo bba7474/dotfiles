@@ -31,14 +31,14 @@ __prompt_color_On_White='\[\e[47m\]'
 
 __prompt_color_NC='\[\e[0m\]'
 
-function __prompt_xtitle()
-{
-    case "$TERM" in
-    *term* | rxvt)
-        echo -en  "\e]0;$*\a" ;;
-    *)  ;;
-    esac
-}
+ function __prompt_xtitle()
+ {
+     case "$TERM" in
+     *term* | rxvt)
+         echo -en  "\e]0;$*\a" ;;
+     *)  ;;
+     esac
+ }
 
 # Begin constructing the prompt
 export PROMPT_COMMAND=__prompt_command
@@ -52,7 +52,7 @@ function smiley_by_exit_code() {
 }
 
 function pwd_tail {
-	pwd | awk -F/ '{nlast = NF -1;print $nlast"/"$NF}'
+    pwd
 }
 
 function dir_files {
@@ -65,8 +65,7 @@ function cpu {
 
 function git_prompt {
 	if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-		# could this be used/wrapped at all? $(__git_ps1)
-		echo "-($(if_dirty_yellow_else_green)$(git_current_branch) $(git_short_commit_hash)$__prompt_color_BBlack)"
+        echo "-($(if_dirty_yellow_else_green)$(git_current_branch) $(git_short_commit_hash)$__prompt_color_BBlack)"
 	fi
 }
 
@@ -86,6 +85,17 @@ function if_dirty_yellow_else_green {
 	fi
 }
 
+function aws_profile {
+    if [[ ! -z "$AWS_PROFILE" ]]; then
+        aws_profile_string_base="$__prompt_color_BBlack-("
+        case "$AWS_PROFILE" in
+            *-prod*) aws_profile_string_base+="$__prompt_color_On_Red" ;;
+            *-nonprod*) aws_profile_string_base+="$__prompt_color_On_Green" ;;
+        esac
+        echo "$aws_profile_string_base$__prompt_color_BWhite"AWS: "$AWS_PROFILE$__prompt_color_On_Black$__prompt_color_BBlack)-"
+    fi
+}
+
 # Laid out to make it maximally convenient to comment out individual features of the prompt
 # Prompt Escape Sequences: http://tldp.org/HOWTO/Bash-Prompt-HOWTO/bash-prompt-escape-sequences.html
 function __prompt_command {
@@ -94,11 +104,9 @@ function __prompt_command {
     history -a
     PS1="$__prompt_color_NC"
     PS1+="$(prompt_history)"
+    PS1+="$(aws_profile)"
     PS1+="$__prompt_color_BBlack($(smiley_by_exit_code "$exit_code")$__prompt_color_BBlack)-"
-#    PS1+="($__prompt_color_BBlue\j$__prompt_color_BBlack)-"
-    PS1+="($__prompt_color_BBlue$(pwd_tail)$__prompt_color_BBlack)-"
-    PS1+="($__prompt_color_Green$(dir_files)$__prompt_color_BBlack)"
-#    PS1+="($__prompt_color_Magenta$(cpu)$__prompt_color_BBlack)"
+    PS1+="($__prompt_color_BBlue$(pwd_tail)$__prompt_color_BBlack)"
     PS1+="$(git_prompt)$__prompt_color_BBlack"
     PS1+="\n"
     PS1+="$__prompt_color_Green$ "
