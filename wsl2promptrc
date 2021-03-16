@@ -111,7 +111,7 @@ function __prompt_command {
     PS1+="($__prompt_color_BBlue$(pwd_tail)$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_Green$(dir_files)$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_Magenta$(cpu)$__prompt_color_BBlack)"
-    # PS1+="-(⬢ $(node --version))"
+    # PS1+="-(📦 $(node --version))"
     # PS1+="-(📦 v$(npm --version))"
     PS1+="$(git_prompt)$__prompt_color_BBlack"
     PS1+="\n"
