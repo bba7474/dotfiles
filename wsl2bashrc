@@ -153,16 +153,12 @@ function gp
         PUSH_OUTPUT="$($PUSH_AND_SET_UPSTREAM_CMD 2>&1 >/dev/null)"
     fi
 
-    which chrome >/dev/null 2>&1
+    PULL_REQUEST_URL=$(echo "$PUSH_OUTPUT" | grep -o "remote: .*" | sed -ur 's/remote:(.*)/\1/' | tail -2)
 
-    if [ "$?" -eq 0 ]; then
-        PULL_REQUEST_URL=$(echo "$PUSH_OUTPUT" | grep -o "remote: .*" | sed -ur 's/remote:(.*)/\1/' | tail -2)
-
-        if [ "$PULL_REQUEST_URL" != "" ]; then
-            echo "Loading Pull Request in your favourite browser... (CTRL+C to cancel)"
-            sleep 1
-            chrome $PULL_REQUEST_URL
-        fi
+    if [ "$PULL_REQUEST_URL" != "" ]; then
+        echo "Loading Pull Request in your favourite browser... (CTRL+C to cancel)"
+        sleep 1
+	/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe $PULL_REQUEST_URL
     fi
 }
 
@@ -194,10 +190,13 @@ alias gdd="git diff --color-words"
 alias gl="git log -n 10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --no-merges"
 alias gca="git commit --all"
 alias gb="git branch -a"
-alias grm="git fetch --prune && git rebase origin/master"
+alias grm="git fetch --prune && git rebase origin/main"
+alias gaa="git add --all"
 alias gaac="git add --all && git commit -m"
 alias master="git fetch --prune && git checkout master && git rebase origin/master"
 alias main="git fetch --prune && git checkout main && git rebase origin/main"
+alias gbranchcleanup="git branch -vv | awk '/: gone]/''{print \$1}' | xargs git branch -D"
+
 
 alias sshh="ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null"
 
@@ -206,3 +205,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
+
+alias clip="clip.exe"
+alias sync-clock="sudo hwclock -s"
+
+source /usr/share/bash-completion/completions/git
