@@ -92,6 +92,7 @@ function aws_profile {
             *-prod*) aws_profile_string_base+="$__prompt_color_On_Red" ;;
             *-nonprod*) aws_profile_string_base+="$__prompt_color_On_Green" ;;
             *-dev*) aws_profile_string_base+="$__prompt_color_On_Green" ;;
+            *-ephemeral*) aws_profile_string_base+="$__prompt_color_On_Blue" ;;
         esac
         echo "$aws_profile_string_base$__prompt_color_BWhite"AWS: "$AWS_PROFILE$__prompt_color_NC$__prompt_color_BBlack)-"
     fi
@@ -112,8 +113,8 @@ function __prompt_command {
     PS1+="($__prompt_color_BBlue$(pwd_tail)$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_Green$(dir_files)$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_Magenta$(cpu)$__prompt_color_BBlack)"
-    # PS1+="-(📦 $(node --version))"
-    # PS1+="-(📦 v$(npm --version))"
+    PS1+="-(📦 $__prompt_color_Cyan$(node --version)$__prompt_color_BBlack)"
+    # PS1+="-(📦 $__prompt_color_Purple$(echo v)$(npm --version)$__prompt_color_BBlack)"
     PS1+="$(git_prompt)$__prompt_color_BBlack"
     PS1+="\n"
     PS1+="$__prompt_color_Green$ "

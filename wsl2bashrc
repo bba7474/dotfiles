@@ -158,8 +158,20 @@ function gp
     if [ "$PULL_REQUEST_URL" != "" ]; then
         echo "Loading Pull Request in your favourite browser... (CTRL+C to cancel)"
         sleep 1
-	/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe $PULL_REQUEST_URL
+	/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe $PULL_REQUEST_URL
     fi
+}
+
+function cp-to-windows
+{
+
+  DEST_DIR=/mnt/c/Users/benjamin.ashby.wood/from_wsl/$(echo $1 | sed -r 's|(.*)/(.+/?)|\1|')
+  if [ ! -z "$2" ]
+  then
+    DEST_DIR=/mnt/c/Users/benjamin.ashby.wood/from_wsl/$2/.
+  fi
+  mkdir -p $DEST_DIR
+  cp -R $1 $DEST_DIR
 }
 
 ## Begin Aliases
@@ -190,12 +202,12 @@ alias gdd="git diff --color-words"
 alias gl="git log -n 10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --no-merges"
 alias gca="git commit --all"
 alias gb="git branch -a"
-alias grm="git fetch --prune && git rebase origin/main"
+alias grm="git fetch --prune && git rebase -i origin/main"
 alias gaa="git add --all"
 alias gaac="git add --all && git commit -m"
 alias master="git fetch --prune && git checkout master && git rebase origin/master"
 alias main="git fetch --prune && git checkout main && git rebase origin/main"
-alias gbranchcleanup="git branch -vv | awk '/: gone]/''{print \$1}' | xargs git branch -D"
+alias gbranchcleanup="git fetch --prune && git branch -vv | awk '/: gone]/''{print \$1}' | xargs git branch -D"
 
 
 alias sshh="ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null"
