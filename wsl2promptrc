@@ -109,12 +109,13 @@ function __prompt_command {
     PS1+="$(prompt_history)"
     PS1+="$(aws_profile)"
     PS1+="$__prompt_color_BBlack($(smiley_by_exit_code "$exit_code")$__prompt_color_BBlack)-"
-    # PS1+="($__prompt_color_BBlue\j$__prompt_color_BBlack)-" WHAT IS THIS MEANT TO DO
+    # PS1+="($__prompt_color_BBlue\j$__prompt_color_BBlack)-"
     # \j     the  number of jobs currently managed by the shell
     PS1+="($__prompt_color_BBlue$(pwd_tail)$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_Green$(dir_files)$__prompt_color_BBlack)-"
     PS1+="($__prompt_color_Magenta$(cpu)$__prompt_color_BBlack)"
-    PS1+="-(📦 $__prompt_color_Cyan$(node --version)$__prompt_color_BBlack)"
+    PS1+="-(♨️ $__prompt_color_Cyan$(java --version | head -1 | cut -d " " -f 2)$__prompt_color_BBlack)"
+    # PS1+="-(📦 $__prompt_color_Cyan$(node --version)$__prompt_color_BBlack)"
     # PS1+="-(📦 $__prompt_color_Purple$(echo v)$(npm --version)$__prompt_color_BBlack)"
     PS1+="$(git_prompt)$__prompt_color_BBlack"
     PS1+="\n"
