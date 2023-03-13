@@ -218,7 +218,6 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-alias clip="clip.exe"
 alias sync-clock="sudo hwclock -s"
 
 source /usr/share/bash-completion/completions/git
