@@ -24,9 +24,13 @@ fi
 
 # Use the dotfiles vimrc if one doesn't exist already
 if [ ! -f $HOME/.wsl2vimrc ]; then
-    ln -s $HOME/code/dotfiles/wsl2vimrc $HOME/.wsl2vimrc
+    ln -s $HOME/code/dotfiles/wsl2vimrc $HOME/.vimrc
 fi
 
+# Use the dotfiles inputrc if it exists
+if [ -f $HOME/code/dotfiles/inputrc ]; then
+    bind -f $HOME/code/dotfiles/inputrc
+fi
 
 set -o noclobber
 shopt -s cdspell
