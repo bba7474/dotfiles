@@ -225,3 +225,16 @@ alias ......="cd ../../../../.."
 alias sync-clock="sudo hwclock -s"
 
 source /usr/share/bash-completion/completions/git
+
+alias k8s=kubectl
+alias k=kubectl
+
+source /usr/share/bash-completion/bash_completion
+complete -o default -F __start_kubectl k8s
+complete -o default -F __start_kubectl k
+
+source <(kubectl completion bash)
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
