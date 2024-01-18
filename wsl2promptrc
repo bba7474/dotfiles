@@ -48,7 +48,7 @@ function prompt_history {
 }
 
 function smiley_by_exit_code() {
-    if [ $1 == 0 ]; then echo "😁"; else echo "🤬"; fi
+    if [ $1 == 0 ]; then echo "$__prompt_color_Green😁"; else echo "$__prompt_color_Red🤬"; fi
 }
 
 function pwd_tail {

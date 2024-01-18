@@ -224,6 +224,8 @@ alias ......="cd ../../../../.."
 
 alias sync-clock="sudo hwclock -s"
 
+alias docker-rm-dangling='docker rmi $(docker images -f "dangling=true" -q)'
+
 source /usr/share/bash-completion/completions/git
 
 alias k8s=kubectl
