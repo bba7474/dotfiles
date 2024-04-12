@@ -44,6 +44,10 @@ if [ -f /etc/DIR_COLORS ]; then
     eval "$(dircolors -b /etc/DIR_COLORS)"
 fi
 
+if [ -f $HOME/code/dotfiles/.fzf.bash ]; then
+    source $HOME/code/dotfiles/.fzf.bash
+fi
+
 HOSTFILE=$HOME/.hosts
 HISTCONTROL=ignoreboth
 HISTSIZE=10000
