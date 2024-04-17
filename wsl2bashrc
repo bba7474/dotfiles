@@ -5,8 +5,8 @@
 # Recommended use is to append this block to your ~/.bashrc file so you can
 # keep this directory under version control:
 #
-# if [ -f $HOME/code/dotfiles/bashrc ]; then
-#     . $HOME/code/dotfiles/bashrc
+# if [ -f $HOME/code/dotfiles/wsl2bashrc ]; then
+#     . $HOME/code/dotfiles/wsl2bashrc
 # fi
 #
 # Deliberately simple in order to enable easier hacking
@@ -23,7 +23,7 @@ if [ -f $HOME/code/dotfiles/wsl2promptrc ]; then
 fi
 
 # Use the dotfiles vimrc if one doesn't exist already
-if [ ! -f $HOME/.wsl2vimrc ]; then
+if [ ! -f $HOME/.vimrc ]; then
     ln -s $HOME/code/dotfiles/wsl2vimrc $HOME/.vimrc
 fi
 
@@ -166,7 +166,7 @@ function gp
     if [ "$PULL_REQUEST_URL" != "" ]; then
         echo "Loading Pull Request in your favourite browser... (CTRL+C to cancel)"
         sleep 1
-	/mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe $PULL_REQUEST_URL
+	$BROWSER_EXE $PULL_REQUEST_URL
     fi
 }
 
